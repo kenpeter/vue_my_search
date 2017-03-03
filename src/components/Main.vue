@@ -10,7 +10,7 @@
           <div class="input-group input-group-md">
             <!-- div, icon-addon, addon-md, like the search icon????? -->
             <div class="icon-addon addon-md">
-              <input type="text" placeholder="What are you looking for?" class="form-control" v-model="query">
+              <input type="text" placeholder="Search actor name?" class="form-control" v-model="query">
             </div>
             
             <!-- span -->
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import myconfig from '../../config';
+
 export default {
   data() {
     return {
@@ -65,16 +67,14 @@ export default {
       this.products = [];
       this.loading = true;
       const theQuery = this.query;
-      this.$http.get(`http://vue_search_back_1.local/api/search?q=${theQuery}`).then((response) => {
-        if (response.body.error) {
-          this.error = response.body.error;
-        } else {
-          this.products = response.body;
-        }
-        this.loading = false;
-        this.query = '';
+      const apiUrl = `https://steppschuh-json-porn-v1.p.mashape.com/search/?advanced=false&q=${theQuery}`;
+      // const apiUrl = `https://steppschuh-json-porn-v1.p.mashape.com/actors/?&actorname=${theQuery}&count=5&offset=0`;
+      const config = { headers: {
+        'X-Mashape-Key': myconfig.x_mashape_key,
+      } };
+      this.axios.get(apiUrl, config).then((response) => {
         /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-        // console.log(this.products);
+        console.log(response.data);
       });
     },
   },

@@ -10,7 +10,9 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "vue": "^2.2.1",
+    "vue-axios": "^1.2.2",
     "vue-resource": "^1.2.1",
     "vue-router": "^2.2.0",
     "vue-truncate-filter": "^1.1.6"
