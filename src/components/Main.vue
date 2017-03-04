@@ -36,10 +36,15 @@
       <div id="products" class="row list-group">
         <div class="item col-xs-4 col-lg-4" v-for="product in products">
           <div class="thumbnail">
-            <img class="group list-group-image" :src="product.image" :alt="product.title" />
             <div class="caption">
-              <p class="group inner list-group-item-text">@{{ product.title | truncate(40) }}</p>
-              <p class="group inner list-group-item-text">@{{ product.description | truncate(50) }} </p>
+              <img :src="product.singleImgUrl" />
+              <p class="group inner list-group-item-text">Name: {{ product.name | truncate(40) }}</p>
+              <p class="group inner list-group-item-text">Cupsize: {{ product.cupSize }} </p>
+              <ul class="list-group">
+                <li class="list-group-item" v-for="imgId in product.imageKeyIds">
+                  {{ imgId }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -50,7 +55,8 @@
 </template>
 
 <script>
-import myconfig from '../../config';
+import Promise from 'bluebird';
+import myconfig from '../../myconfig';
 
 export default {
   data() {
@@ -74,7 +80,37 @@ export default {
       } };
       this.axios.get(apiUrl, config).then((response) => {
         /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-        console.log(response.data);
+        // console.log(response.data.content);
+        let arr = response.data.content;
+        arr = arr.filter((el) => {
+          // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+          if (el.entryType === 1) {
+            return true;
+          }
+          return false;
+        });
+        /* eslint arrow-body-style: ["error", "always"] */
+        return new Promise((resolve, reject) => {
+          const condi = 0;
+          // get away lint error
+          if (condi) return reject();
+          return resolve(arr);
+        });
+      }).then((arr) => {
+        return Promise.each(arr, (item) => {
+          return new Promise((resolve, reject) => {
+            const imgKeyId = item.imageKeyIds[0];
+            const singleImgUrl = `https://steppschuh-json-porn-v1.p.mashape.com/image/${imgKeyId}/400.jpg`;
+            item.singleImgUrl = singleImgUrl;
+            const condi = 0;
+            // get away lint error
+            if (condi) return reject();
+            return resolve();
+          });
+        });
+      }).then((newArr) => {
+        this.products = newArr;
+        // console.log(newArr);
       });
     },
   },
