@@ -100,7 +100,7 @@ export default {
         return Promise.each(arr, (item) => {
           return new Promise((resolve, reject) => {
             const imgKeyId = item.imageKeyIds[0];
-            const singleImgUrl = `https://steppschuh-json-porn-v1.p.mashape.com/image/${imgKeyId}/400.jpg`;
+            const singleImgUrl = `http://json-porn.com/image/${imgKeyId}/300.jpg`;
             item.singleImgUrl = singleImgUrl;
             const condi = 0;
             // get away lint error
@@ -109,6 +109,7 @@ export default {
           });
         });
       }).then((newArr) => {
+        this.loading = false;
         this.products = newArr;
         // console.log(newArr);
       });
