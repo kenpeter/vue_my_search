@@ -37,14 +37,11 @@
         <div class="item col-xs-4 col-lg-4" v-for="product in products">
           <div class="thumbnail">
             <div class="caption">
-              <img :src="product.singleImgUrl" />
+              <router-link :to="{ path: 'profile', query: { userId: product.key.id }}">
+                <img :src="product.singleImgUrl" />
+              </router-link>
               <p class="group inner list-group-item-text">Name: {{ product.name | truncate(40) }}</p>
               <p class="group inner list-group-item-text">Cupsize: {{ product.cupSize }} </p>
-              <ul class="list-group">
-                <li class="list-group-item" v-for="imgId in product.imageKeyIds">
-                  {{ imgId }}
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -111,7 +108,7 @@ export default {
       }).then((newArr) => {
         this.loading = false;
         this.products = newArr;
-        // console.log(newArr);
+        console.log(newArr);
       });
     },
   },
