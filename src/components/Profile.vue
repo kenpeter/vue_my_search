@@ -43,6 +43,7 @@ export default {
     } };
     const actorId = this.$route.query.actorId;
     const apiUrl = `https://steppschuh-json-porn-v1.p.mashape.com/porn/?actorid=${actorId}&includedownloads=true&count=2&includeimages=true&offset=0&pornType=4`;
+    // const apiUrl = `https://http://json-porn.com/porn/?actorid=${actorId}&includedownloads=true&count=2&includeimages=true&offset=0&pornType=4`;
     this.axios.get(apiUrl, config).then((response) => {
       // console.log(response);
       this.content = response.data.content;
