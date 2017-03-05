@@ -37,7 +37,7 @@
         <div class="item col-xs-4 col-lg-4" v-for="product in products">
           <div class="thumbnail">
             <div class="caption">
-              <router-link :to="{ path: 'profile', query: { userId: product.key.id }}">
+              <router-link :to="{ path: 'profile', query: { actorId: product.key.id }}">
                 <img :src="product.singleImgUrl" />
               </router-link>
               <p class="group inner list-group-item-text">Name: {{ product.name | truncate(40) }}</p>
@@ -108,7 +108,7 @@ export default {
       }).then((newArr) => {
         this.loading = false;
         this.products = newArr;
-        console.log(newArr);
+        // console.log(newArr);
       });
     },
   },
