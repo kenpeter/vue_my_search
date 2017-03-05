@@ -1,6 +1,12 @@
 <template>
   <div class="profile">
     <div class="container">
+      <h3>
+        <router-link :to="{ path: '/' }">
+          Back to home page
+        </router-link>
+      </h3>
+    
       <div class="row">
         <!-- https://stackoverflow.com/questions/42309986/vuejs-get-url-query -->
         <div class="item col-xs-12 col-lg-12" v-for="item in content">
@@ -36,7 +42,7 @@ export default {
       'X-Mashape-Key': myconfig.x_mashape_key,
     } };
     const actorId = this.$route.query.actorId;
-    const apiUrl = `https://steppschuh-json-porn-v1.p.mashape.com/porn/?actorid=${actorId}&includedownloads=true&includeimages=true&offset=0&pornType=4`;
+    const apiUrl = `https://steppschuh-json-porn-v1.p.mashape.com/porn/?actorid=${actorId}&includedownloads=true&count=2&includeimages=true&offset=0&pornType=4`;
     this.axios.get(apiUrl, config).then((response) => {
       // console.log(response);
       this.content = response.data.content;
